@@ -228,7 +228,7 @@ three_ahead_pred = []
 
 
 # make predictions
-with open(str((Path.cwd()/'code'/'output_files'/'next_activity_and_time_''{}'.format(eventlog)).resolve()), 'w') as csvfile:
+with open(str((Path.cwd()/'code'/'output_files'/'results'/'next_activity_and_time_''{}'.format(eventlog)).resolve()), 'w') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     spamwriter.writerow(["CaseID", "Prefix length", "Groud truth", "Predicted", "Levenshtein", "Damerau", "Jaccard", "Ground truth times", "Predicted times", "RMSE", "MAE"])
     for prefix_size in range(2,maxlen):
