@@ -8,7 +8,6 @@ from keras.optimizers import Nadam
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from keras.layers.normalization import BatchNormalization
 from collections import Counter
-import unicodecsv
 import numpy as np
 import random
 import sys
@@ -34,7 +33,7 @@ timeseqs2 = [] #time sequences (differences between the current and first)
 
 #helper variables
 lastcase = ''
-line = ''
+line = []
 firstLine = True
 times = []
 times2 = []
@@ -59,11 +58,11 @@ for row in spamreader: #the rows are "CaseID,ActivityID,CompleteTimestamp"
             lines.append(line)
             timeseqs.append(times)
             timeseqs2.append(times2)
-        line = ''
+        line = []
         times = []
         times2 = []
         numlines+=1
-    line+=(str(row[1]))
+    line.append(str(row[1]))
     timesincelastevent = t - lasteventtime
     timesincecasestart = t - casestarttime
     timediff = timesincelastevent.total_seconds()
@@ -112,7 +111,11 @@ step = 1
 sentences = []
 softness = 0
 next_chars = []
-lines = list(map(lambda x: x+'!',lines)) #put delimiter symbol
+
+for i in lines:
+    i.append('!')
+
+#list(map(lambda x: x+'!',lines)) #put delimiter symbol
 maxlen = max(map(lambda x: len(x),lines)) #find maximum line size
 
 # next lines here to get all possible characters for events and annotate them with numbers
@@ -134,7 +137,7 @@ csvfile = open(str((Path.cwd()/'data'/'{}'.format(eventlog)).resolve()), 'r')
 spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
 next(spamreader, None)  # skip the headers
 lastcase = ''
-line = ''
+line = []
 firstLine = True
 lines = []
 timeseqs = []
@@ -160,13 +163,13 @@ for row in spamreader:
             timeseqs2.append(times2)
             timeseqs3.append(times3)
             timeseqs4.append(times4)
-        line = ''
+        line = []
         times = []
         times2 = []
         times3 = []
         times4 = []
         numlines+=1
-    line+=(str(row[1]))
+    line.append(str(row[1]))
     timesincelastevent = t - lasteventtime
     timesincecasestart = t - casestarttime
     midnight = t.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -231,7 +234,10 @@ step = 1
 sentences = []
 softness = 0
 next_chars = []
-lines = map(lambda x: x+'!',lines)
+
+for i in lines:
+    i.append('!')
+#lines = map(lambda x: x+'!',lines)
 
 sentences_t = []
 sentences_t2 = []

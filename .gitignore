@@ -140,3 +140,8 @@ cython_debug/
 
 #vscode
 .vscode/
+
+#ourput_files
+code/output_files/folds/
+code/output_files/results/
+code/output_files/models/

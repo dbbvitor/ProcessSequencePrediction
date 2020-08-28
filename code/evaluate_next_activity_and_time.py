@@ -13,7 +13,6 @@ import copy
 import numpy as np
 import distance
 from jellyfish._jellyfish import damerau_levenshtein_distance
-import unicodecsv
 from sklearn import metrics
 from math import sqrt
 import time
@@ -28,7 +27,7 @@ spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
 next(spamreader, None)  # skip the headers
 
 lastcase = ''
-line = ''
+line = []
 firstLine = True
 lines = []
 caseids = []
@@ -50,10 +49,10 @@ for row in spamreader:
             lines.append(line)
             timeseqs.append(times)
             timeseqs2.append(times2)
-        line = ''
+        line = []
         times = []
         numlines+=1
-    line += str(row[1])
+    line.append(str(row[1]))
     timesincelastevent = t - lasteventtime
     timesincecasestart = t - casestarttime
     timediff = timesincelastevent.total_seconds()
@@ -94,7 +93,10 @@ step = 1
 sentences = []
 softness = 0
 next_chars = []
-lines = list(map(lambda x: x+'!',lines))
+
+for i in lines:
+    i.append('!')
+
 maxlen = max(map(lambda x: len(x),lines))
 
 chars = list(map(lambda x : set(x),lines))
@@ -111,7 +113,7 @@ print(indices_char)
 
 
 lastcase = ''
-line = ''
+line = []
 firstLine = True
 lines = []
 caseids = []
@@ -139,10 +141,10 @@ for row in spamreader:
             timeseqs.append(times)
             timeseqs2.append(times2)
             timeseqs3.append(times3)
-        line = ''
+        line = []
         times = []
         numlines+=1
-    line += str(row[1])
+    line.append(str(row[1]))
     timesincelastevent = t - lasteventtime
     timesincecasestart = t - casestarttime
     midnight = t.replace(hour=0, minute=0, second=0, microsecond=0)

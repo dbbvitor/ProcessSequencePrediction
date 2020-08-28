@@ -13,7 +13,6 @@ import copy
 import numpy as np
 import distance
 from jellyfish._jellyfish import damerau_levenshtein_distance
-import unicodecsv
 from sklearn import metrics
 from math import sqrt
 import time
@@ -115,7 +114,7 @@ print(indices_char)
 
 
 lastcase = ''
-line = ''
+line = []
 firstLine = True
 lines = []
 caseids = []
@@ -143,12 +142,12 @@ for row in spamreader:
             timeseqs.append(times)
             timeseqs2.append(times2)
             timeseqs3.append(times3)
-        line = ''
+        line = []
         times = []
         times2 = []
         times3 = []
         numlines+=1
-    line += str(row[1])
+    line.append(str(row[1]))
     timesincelastevent = t - lasteventtime
     timesincecasestart = t - casestarttime
     midnight = t.replace(hour=0, minute=0, second=0, microsecond=0)
